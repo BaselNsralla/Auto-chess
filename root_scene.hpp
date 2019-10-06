@@ -1,6 +1,8 @@
 #pragma once
 #include <memory>
 #include <SFML/Graphics.hpp>
+#include <vector>
+#include "chess_scene.hpp"
 
 /* 
     En ROOT scene som driver hela spelet,
@@ -38,13 +40,13 @@ namespace AC
     class RootScene: AC::RenderInterface {
 
         std::unique_ptr<sf::RenderWindow> window;
-
         private:
             RootScene(); 
 
         public:
             static RootScene* scene;
             static RootScene* get_instance();
+            std::unique_ptr<ChessScene> chess_scene{std::make_unique<ChessScene>(200,200)};
             
             void render() override; 
             void begin();
