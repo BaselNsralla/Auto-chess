@@ -2,8 +2,8 @@
 #include <memory>
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "chess_scene.hpp"
-
+#include "scene.hpp"
+#include "render_interface.hpp"
 /* 
     En ROOT scene som driver hela spelet,
     Den tar hand om att drag ingång spelet på
@@ -30,26 +30,24 @@
 
 */
 
-namespace AC
+
+/*
+ska vi omvandla RootScene till en base klass till en annan?
+ aa
+*/
+namespace engine
 {
-    class RenderInterface {
-        protected:
-        virtual void render() = 0;
-    };
-
-    class RootScene: AC::RenderInterface {
-
-        std::unique_ptr<sf::RenderWindow> window;
-        private:
-            RootScene(); 
+    class RootScene: public engine::RenderInterface {
 
         public:
-            static RootScene* scene;
-            static RootScene* get_instance();
-            std::unique_ptr<ChessScene> chess_scene{std::make_unique<ChessScene>(200,200)};
+            RootScene(); 
+            void set_child_scene(Scene* scene);
+            //static RootScene* scene;
+            //static RootScene* get_instance();
+            engine::Scene* child_scene;
             
-            void render() override; 
-            void begin();
+            void render(sf::RenderWindow& window) override; 
+            //void begin();
     };
     
 }
